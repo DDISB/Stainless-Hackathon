@@ -1,6 +1,37 @@
 <script lang="ts">
     import Balance from '../components/Balance.svelte';
+    import LevelProgression from '../components/LevelProgression.svelte';
+    import type { Bonus, Prize } from '../interfaces';
+
     let currentDate: string;
+    let currentLevel = 12; // Example current level
+
+    const bonuses: Bonus[] = Array.from({ length: 30 }, (_, i) => ({
+        level: i + 1,
+        points: (i + 1) * 10,
+        description: `Бонус ${i + 1} уровня`
+    }));
+
+    const prizes: Prize[] = [
+        {
+            level: 5,
+            name: 'Бесплатное посещение',
+            description: 'Море Парк',
+            image: '/images/more-park.png'
+        },
+        {
+            level: 15,
+            name: 'Промокод на 1000 руб',
+            description: 'В магазине',
+            image: '/images/promo.png'
+        },
+        {
+            level: 30,
+            name: '+50% скидка',
+            description: 'От 700 руб',
+            image: '/images/discount.png'
+        }
+    ];
 
     function formatDate(date: Date): string {
         const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
@@ -29,7 +60,11 @@
 
     <div class="content">
         <div class="content-block">
-            Iron-Pass content
+            <LevelProgression 
+                {currentLevel}
+                {bonuses}
+                {prizes}
+            />
         </div>
     </div>
 </div>
