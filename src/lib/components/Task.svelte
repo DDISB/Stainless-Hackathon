@@ -35,7 +35,14 @@
     }
 </script>
 
-<div class="task" class:clickable={showDetails} on:click={navigateToDetails}>
+<div 
+    class="task" 
+    class:clickable={showDetails} 
+    on:click={navigateToDetails}
+    on:keydown={e => e.key === 'Enter' && navigateToDetails()}
+    role="button"
+    tabindex="0"
+>
     {#if image}
         <div class="task-image" style="background-image: url({image})">
             <div class="task-title">
@@ -81,6 +88,8 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        text-align: left;
     }
 
     .task.clickable {
