@@ -1,8 +1,13 @@
 <script lang="ts">
+    import { auth } from '../stores/auth';
     import ActiveTasks from '../components/ActiveTasks.svelte';
     import NewTasks from '../components/NewTasks.svelte';
     import Balance from '../components/Balance.svelte';
     import crownIcon from '../../assets/crown.svg';
+    import cabinetIcon from '../../assets/cabinet.svg';
+    import bonusIcon from '../../assets/bonus.svg';
+    import shopIcon from '../../assets/shop.svg';
+    import profileIcon from '../../assets/profile.svg';
     
     let currentDate: string;
     let activeTab = 'active'; // 'active' or 'new'
@@ -18,6 +23,11 @@
         return `${dayName}, ${day} ${month}`;
     }
 
+    interface Task {
+        id: number;
+        title: string;
+    }
+
     $: currentDate = formatDate(new Date());
 
     function navigateToSubscription() {
@@ -28,6 +38,12 @@
 
     function setActiveTab(tab: string) {
         activeTab = tab;
+    }
+
+    function navigate(component: string) {
+        window.dispatchEvent(new CustomEvent('navigate', { 
+            detail: { component }
+        }));
     }
 </script>
 
@@ -110,10 +126,32 @@
     </div>
 </div>
 
+<nav class="bottom-nav">
+    <button class="active" on:click={() => navigate('catalog')}>
+        <img src={cabinetIcon} alt="Cabinet icon" />
+        <span>Кабинет</span>
+    </button>
+    <button on:click={() => navigate('iron-pass')}>
+        <img src={bonusIcon} alt="Iron-Pass icon" />
+        <span>Бонусы</span>
+    </button>
+    <button on:click={() => navigate('shop')}>
+        <img src={shopIcon} alt="Shop icon" />
+        <span>Магазин</span>
+    </button>
+    <button on:click={() => navigate('profile')}>
+        <img src={profileIcon} alt="Profile icon" />
+        <span>Профиль</span>
+    </button>
+</nav>
+
 <style>
     :global(body) {
         font-family: 'Lato', sans-serif;
         color: #313E56;
+        background-color: #EFF2F7;
+        margin: 0;
+        padding: 0;
     }
 
     h1 {
@@ -134,17 +172,21 @@
         max-width: 1000px;
         width: 100%;
         height: 100%;
-
+        margin: 0 auto;
+        /* padding: 24px; */
         display: flex;
         flex-direction: column;
         gap: 30px;
     }
+
     .content {
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         gap: 24px;
+        padding-bottom: 84px;
     }
 
     .header {
@@ -173,7 +215,7 @@
         width: 100%;
         background-color: white;
         border-radius: 16px;
-        padding: 32px 16px;
+        padding: 16px;
         display: flex;
         flex-direction: column;
         gap: 24px;
@@ -333,4 +375,57 @@
         background-color: #2B5BDA;
         color: white;
     }
-</style>
+
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #f8f9fa;
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        z-index: 100;
+    }
+
+    .bottom-nav button {
+        background: none;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 10px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: #9299A699;
+    }
+
+    .bottom-nav button img {
+        width: 24px;
+        height: 24px;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+    }
+
+    .bottom-nav button:hover {
+        background-color: #e9ecef;
+    }
+
+    .bottom-nav button:hover img {
+        opacity: 1;
+    }
+
+    .bottom-nav button.active {
+        background-color: #e9ecef;
+        color: #2B5BDA;
+    }
+
+    .bottom-nav button.active img {
+        opacity: 1;
+    }
+</style> 

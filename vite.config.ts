@@ -7,5 +7,18 @@ export default defineConfig({
   server: {
     host: true, // Listen on all network interfaces
     port: 5173, // Default Vite port
+    proxy: {
+      '/api': {
+        target: 'http://10.168.126.75:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        bypass: (req, res, options) => {
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+          res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        }
+      }
+    }
   }
 })

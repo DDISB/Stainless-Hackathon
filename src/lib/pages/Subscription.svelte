@@ -20,6 +20,12 @@
             detail: { component: 'catalog' }
         }));
     }
+
+    function navigateToBuySubscription() {
+        window.dispatchEvent(new CustomEvent('navigate', { 
+            detail: { component: 'buy-subscription' }
+        }));
+    }
 </script>
 
 <div class="main-container">
@@ -38,6 +44,12 @@
             <button class="try-button">Попробовать бесплатно</button>
             <p class="price">1 нед. бесплатно, потом 649 руб/неделя</p>
         </div>
+    </div>
+
+    <div class="buy-button-container">
+        <button class="buy-button" on:click={navigateToBuySubscription}>
+            Купить
+        </button>
     </div>
 </div>
 
@@ -126,4 +138,37 @@
         margin-top: 8px;
     }
 
+    .buy-button-container {
+        position: fixed;
+        bottom: 84px;
+        left: 0;
+        right: 0;
+        padding: 16px 24px;
+        background: white;
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+    }
+
+    .buy-button {
+        width: 100%;
+        max-width: 400px;
+        height: 48px;
+        background: #2B5BDA;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .buy-button:hover {
+        background: #1e4bc6;
+    }
+
+    .buy-button:active {
+        background: #183c9e;
+    }
 </style> 

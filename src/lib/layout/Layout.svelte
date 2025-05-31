@@ -1,18 +1,19 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import Catalog from '../pages/Сabinet.svelte';
+    import Cabinet from '../pages/Cabinet.svelte';
     import IronPass from '../pages/IronPass.svelte';
     import Shop from '../pages/Shop.svelte';
     import Profile from '../pages/Profile.svelte';
     import Subscription from '../pages/Subscription.svelte';
     import TaskDetails from '../pages/TaskDetails.svelte';
+    import BuySubscription from '../pages/BuySubscription.svelte';
     import type { TaskData } from '../interfaces';
     import cabinetIcon from '../../assets/cabinet.svg';
     import bonusIcon from '../../assets/bonus.svg';
     import shopIcon from '../../assets/shop.svg';
     import profileIcon from '../../assets/profile.svg';
 
-    let activeComponent = 'catalog';
+    export let currentComponent: string;
     let currentTaskData: TaskData | null = null;
 
     onMount(() => {
@@ -20,18 +21,21 @@
             if (e.detail.taskData) {
                 currentTaskData = e.detail.taskData;
             }
-            setActiveComponent(e.detail.component);
         }) as EventListener);
         
         return () => {
             window.removeEventListener('navigate', ((e: CustomEvent) => {
-                setActiveComponent(e.detail.component);
+                if (e.detail.taskData) {
+                    currentTaskData = e.detail.taskData;
+                }
             }) as EventListener);
         };
     });
 
     function setActiveComponent(component: string) {
-        activeComponent = component;
+        window.dispatchEvent(new CustomEvent('navigate', { 
+            detail: { component }
+        }));
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 </script>
@@ -42,35 +46,37 @@
 
 <div class="layout">
     <main class="content">
-        {#if activeComponent === 'catalog'}
-            <Catalog />
-        {:else if activeComponent === 'iron-pass'}
+        {#if currentComponent === 'cabinet'}
+            <Cabinet />
+        {:else if currentComponent === 'iron-pass'}
             <IronPass />
-        {:else if activeComponent === 'shop'}
+        {:else if currentComponent === 'shop'}
             <Shop />
-        {:else if activeComponent === 'profile'}
+        {:else if currentComponent === 'profile'}
             <Profile />
-        {:else if activeComponent === 'subscription'}
+        {:else if currentComponent === 'subscription'}
             <Subscription />
-        {:else if activeComponent === 'task-details' && currentTaskData}
+        {:else if currentComponent === 'buy-subscription'}
+            <BuySubscription />
+        {:else if currentComponent === 'task-details' && currentTaskData}
             <TaskDetails taskData={currentTaskData} />
         {/if}
     </main>
 
     <nav class="bottom-nav">
-        <button class:active={activeComponent === 'catalog'} on:click={() => setActiveComponent('catalog')}>
+        <button class:active={currentComponent === 'cabinet'} on:click={() => setActiveComponent('cabinet')}>
             <img src={cabinetIcon} alt="Cabinet icon" />
             <span>Кабинет</span>
         </button>
-        <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
+        <button class:active={currentComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
             <img src={bonusIcon} alt="Iron-Pass icon" />
             <span>Бонусы</span>
         </button>
-        <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
+        <button class:active={currentComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
             <img src={shopIcon} alt="Shop icon" />
             <span>Магазин</span>
         </button>
-        <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
+        <button class:active={currentComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
             <img src={profileIcon} alt="Profile icon" />
             <span>Профиль</span>
         </button>
