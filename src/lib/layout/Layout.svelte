@@ -2,7 +2,6 @@
     import { onMount } from 'svelte';
     import Catalog from '../pages/Сabinet.svelte';
     import IronPass from '../pages/IronPass.svelte';
-    import Shop from '../pages/Shop.svelte';
     import Profile from '../pages/Profile.svelte';
     import Subscription from '../pages/Subscription.svelte';
 
@@ -46,9 +45,6 @@
             <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
                 Iron-Pass
             </button>
-            <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
-                Магазин
-            </button>
             <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
                 Профиль
             </button>
@@ -60,8 +56,6 @@
             <Catalog />
         {:else if activeComponent === 'iron-pass'}
             <IronPass />
-        {:else if activeComponent === 'shop'}
-            <Shop />
         {:else if activeComponent === 'profile'}
             <Profile />
         {:else if activeComponent === 'subscription'}
@@ -76,9 +70,6 @@
             </button>
             <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
                 Iron-Pass
-            </button>
-            <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
-                Магазин
             </button>
             <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
                 Профиль
