@@ -16,15 +16,16 @@ interface AuthStore {
 
 function createAuthStore() {
     const { subscribe, set, update } = writable<AuthStore>({
-        user: null,
+        user: JSON.parse(localStorage.getItem('user') || 'null'),
         token: localStorage.getItem('token'),
-        isAuthenticated: false
+        isAuthenticated: !!localStorage.getItem('token')
     });
 
     return {
         subscribe,
         login: (user: User, token: string) => {
             localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
             set({
                 user,
                 token,
@@ -33,6 +34,7 @@ function createAuthStore() {
         },
         logout: () => {
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
             set({
                 user: null,
                 token: null,
@@ -41,19 +43,12 @@ function createAuthStore() {
         },
         initialize: () => {
             const token = localStorage.getItem('token');
-            if (!token) {
-                set({
-                    user: null,
-                    token: null,
-                    isAuthenticated: false
-                });
-                return;
-            }
-            // Если есть токен в localStorage, устанавливаем состояние авторизации
+            const user = JSON.parse(localStorage.getItem('user') || 'null');
+            
             set({
-                user: null, // Пользователь будет установлен при первом запросе к API
+                user,
                 token,
-                isAuthenticated: true
+                isAuthenticated: !!token
             });
         }
     };

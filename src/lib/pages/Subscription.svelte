@@ -17,7 +17,7 @@
 
     function goBack() {
         window.dispatchEvent(new CustomEvent('navigate', { 
-            detail: { component: 'catalog' }
+            detail: { component: 'cabinet' }
         }));
     }
 
@@ -44,9 +44,7 @@
             <button class="try-button">Попробовать бесплатно</button>
             <p class="price">1 нед. бесплатно, потом 649 руб/неделя</p>
         </div>
-    </div>
 
-    <div class="buy-button-container">
         <button class="buy-button" on:click={navigateToBuySubscription}>
             Купить
         </button>
@@ -138,21 +136,10 @@
         margin-top: 8px;
     }
 
-    .buy-button-container {
-        position: fixed;
-        bottom: 84px;
-        left: 0;
-        right: 0;
-        padding: 16px 24px;
-        background: white;
-        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: center;
-    }
-
     .buy-button {
         width: 100%;
         max-width: 400px;
+        margin-top: 24px;
         height: 48px;
         background: #2B5BDA;
         color: white;
