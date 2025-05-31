@@ -1,4 +1,6 @@
 <script lang="ts">
+    import type { TaskData } from '../interfaces';
+
     export let title: string;
     export let points: number;
     export let description: string;
@@ -8,9 +10,32 @@
     export let progress: number = 0;
     export let company: string = "";
     export let companyDescription: string = "";
+    export let showDetails: boolean = true;
+
+    function navigateToDetails() {
+        if (showDetails) {
+            const taskData: TaskData = {
+                title,
+                points,
+                description,
+                isNew,
+                image,
+                timeLeft,
+                progress,
+                company,
+                companyDescription
+            };
+            window.dispatchEvent(new CustomEvent('navigate', { 
+                detail: { 
+                    component: 'task-details',
+                    taskData
+                }
+            }));
+        }
+    }
 </script>
 
-<div class="task">
+<div class="task" class:clickable={showDetails} on:click={navigateToDetails}>
     {#if image}
         <div class="task-image" style="background-image: url({image})">
             <div class="task-title">
@@ -56,6 +81,16 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+    }
+
+    .task.clickable {
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .task.clickable:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .task-image {

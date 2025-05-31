@@ -5,14 +5,20 @@
     import Shop from '../pages/Shop.svelte';
     import Profile from '../pages/Profile.svelte';
     import Subscription from '../pages/Subscription.svelte';
+    import TaskDetails from '../pages/TaskDetails.svelte';
+    import type { TaskData } from '../interfaces';
 
     let activeComponent = 'catalog';
     let isMobile = false;
+    let currentTaskData: TaskData | null = null;
 
     onMount(() => {
         checkMobile();
         window.addEventListener('resize', checkMobile);
-        window.addEventListener('navigate', ((e: CustomEvent) => {
+        window.addEventListener('navigate', ((e: CustomEvent<{component: string; taskData?: TaskData}>) => {
+            if (e.detail.taskData) {
+                currentTaskData = e.detail.taskData;
+            }
             setActiveComponent(e.detail.component);
         }) as EventListener);
         
@@ -30,6 +36,7 @@
 
     function setActiveComponent(component: string) {
         activeComponent = component;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 </script>
 
@@ -66,13 +73,15 @@
             <Profile />
         {:else if activeComponent === 'subscription'}
             <Subscription />
+        {:else if activeComponent === 'task-details' && currentTaskData}
+            <TaskDetails taskData={currentTaskData} />
         {/if}
     </main>
 
     {#if isMobile}
         <nav class="mobile-nav">
             <button class:active={activeComponent === 'catalog'} on:click={() => setActiveComponent('catalog')}>
-                Каталог
+                Кабинет
             </button>
             <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
                 Iron-Pass
