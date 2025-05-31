@@ -64,7 +64,7 @@
         </button>
         <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
             <img src={bonusIcon} alt="Iron-Pass icon" />
-            <span>Iron-Pass</span>
+            <span>Бонусы</span>
         </button>
         <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
             <img src={shopIcon} alt="Shop icon" />
