@@ -1,13 +1,51 @@
 <script lang="ts">
+    let currentDate: string;
+
+    function formatDate(date: Date): string {
+        const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+        const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+        
+        const dayName = days[date.getDay()];
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+        
+        return `${dayName}, ${day} ${month}`;
+    }
+
+    $: currentDate = formatDate(new Date());
+
     function handlePurchase() {
         // Purchase logic will be implemented here
         console.log('Purchase initiated');
     }
+
+    function goBack() {
+        window.dispatchEvent(new CustomEvent('navigate', { 
+            detail: { component: 'catalog' }
+        }));
+    }
 </script>
 
 <div class="main-container">
+    <button class="back-button" on:click={goBack}>
+        ← Вернуться в кабинет
+    </button>
+
     <div class="header">
-        <h1>Подписка</h1>
+        <div class="top-header">
+            <div class="date">{currentDate}</div>
+        </div>
+        <div class="low-header">
+            <h1>Подписка</h1>
+            <div class="balance" role="status" aria-label="Current balance">
+                <span class="balance-number">2880</span>
+                <img
+                    class="box-minimalistic"
+                    src="https://c.animaapp.com/mbc14gzx2SIMy8/img/box-minimalistic.svg"
+                    alt="Balance icon"
+                />
+            </div>
+        </div>
     </div>
 
     <div class="content">
@@ -55,31 +93,71 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 30px;
+    }
+
+    .content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 
     .header {
         width: 100%;
         height: 50px;
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .low-header {
+        display: flex;
         align-items: center;
-        padding: 0;
+        justify-content: space-between;
     }
 
     h1 {
         font-size: 32px;
+        margin: 0;
+    }
+
+    .date {
+        font-size: 12px;
+        color: #6c757d;
+    }
+
+    .balance {
+        display: flex;
+        height: 38px;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 4px 10px 4px 12px;
+        background-color: #2B5BDA;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .balance:hover {
+        background-color: #1e45cc;
+    }
+
+    .balance-number {
+        position: relative;
+        width: fit-content;
+        font-family: "Lato", Helvetica;
         font-weight: 600;
-        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        text-align: right;
+        letter-spacing: 0;
+        line-height: normal;
     }
 
-    h2 {
-        font-size: 24px;
-        margin: 0;
-        color: #2B5BDA;
-    }
-
-    .content {
-        width: 100%;
+    .balance .box-minimalistic {
+        width: 16px;
+        height: 16px;
     }
 
     .subscription-card {
@@ -141,5 +219,35 @@
 
     .purchase-button:hover {
         opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+        .content {
+            padding-bottom: 60px;
+        }
+
+        .balance {
+            padding: 4px 8px;
+        }
+
+        .balance .box-minimalistic {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .back-button {
+        background: none;
+        border: none;
+        color: #2B5BDA;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 10px 0;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .back-button:hover {
+        text-decoration: underline;
     }
 </style> 
