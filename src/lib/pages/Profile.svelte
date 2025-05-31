@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Balance from '../components/Balance.svelte';
     let currentDate: string;
 
     function formatDate(date: Date): string {
@@ -28,14 +29,7 @@
         </div>
         <div class="low-header">
             <h1>Профиль</h1>
-            <div class="balance" role="status" aria-label="Current balance">
-                <span class="balance-number">2880</span>
-                <img
-                    class="box-minimalistic"
-                    src="https://c.animaapp.com/mbc14gzx2SIMy8/img/box-minimalistic.svg"
-                    alt="Balance icon"
-                />
-            </div>
+            <Balance points={2880} />
         </div>
     </div>
 
@@ -101,39 +95,6 @@
     .date {
         font-size: 12px;
         color: #6c757d;
-    }
-
-    .balance {
-        display: flex;
-        height: 38px;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        padding: 4px 10px 4px 12px;
-        background-color: #2B5BDA;
-        border-radius: 8px;
-        transition: background-color 0.3s ease;
-    }
-
-    .balance:hover {
-        background-color: #1e45cc;
-    }
-
-    .balance-number {
-        position: relative;
-        width: fit-content;
-        font-family: "Lato", Helvetica;
-        font-weight: 600;
-        color: #ffffff;
-        font-size: 14px;
-        text-align: right;
-        letter-spacing: 0;
-        line-height: normal;
-    }
-
-    .balance .box-minimalistic {
-        width: 16px;
-        height: 16px;
     }
 
     .content-block {
@@ -204,15 +165,6 @@
     @media (max-width: 768px) {
         .content {
             padding-bottom: 60px;
-        }
-
-        .balance {
-            padding: 4px 8px;
-        }
-
-        .balance .box-minimalistic {
-            width: 14px;
-            height: 14px;
         }
     }
 </style> 

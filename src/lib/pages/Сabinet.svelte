@@ -1,6 +1,7 @@
 <script lang="ts">
     import ActiveTasks from '../components/ActiveTasks.svelte';
     import NewTasks from '../components/NewTasks.svelte';
+    import Balance from '../components/Balance.svelte';
     import crownIcon from '../../assets/crown.svg';
     
     let currentDate: string;
@@ -37,16 +38,7 @@
         </div>
         <div class="low-header">
             <h1>Кабинет</h1>
-            
-
-        <div class="balance" role="status" aria-label="Current balance">
-            <span class="balance-number">2880</span>
-            <img
-                class="box-minimalistic"
-                src="https://c.animaapp.com/mbc14gzx2SIMy8/img/box-minimalistic.svg"
-                alt="Balance icon"
-            />
-        </div>
+            <Balance points={2880} />
         </div>
     </div>
 
@@ -245,40 +237,6 @@
         background-color: #f0f3ff;
     }
 
-    .balance-number {
-        position: relative;
-        width: fit-content;
-        font-family: "Lato", Helvetica;
-        font-weight: 600;
-        color: #ffffff;
-        font-size: 14px;
-        text-align: right;
-        letter-spacing: 0;
-        line-height: normal;
-    }
-
-    .balance {
-        display: flex;
-        height: 32px;
-        width: 72px;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        /* padding: 200px 0px; */
-        background-color: #2B5BDA;
-        border-radius: 12px;
-        transition: background-color 0.3s ease;
-    }
-
-    .balance:hover {
-        background-color: #1e45cc;
-    }
-
-    .balance .box-minimalistic {
-        width: 16px;
-        height: 16px;
-    }
-
     .date {
         font-size: 12px;
         color: #6c757d;
@@ -352,15 +310,6 @@
     @media (max-width: 768px) {
         .content {
             padding-bottom: 60px;
-        }
-
-        .balance {
-            padding: 4px 8px;
-        }
-
-        .balance .box-minimalistic {
-            width: 14px;
-            height: 14px;
         }
     }
 
