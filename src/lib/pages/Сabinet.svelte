@@ -119,9 +119,13 @@
 </div>
 
 <style>
+    :global(body) {
+        font-family: 'Lato', sans-serif;
+        color: #313E56;
+    }
+
     h1 {
         font-size: 32px;
-        color: #313E56;
         font-weight: 700;
     }
 
@@ -131,7 +135,6 @@
     }
 
     .gray-text {
-        color: #313E56;
         font-size: 20px;
     }
 
@@ -213,7 +216,6 @@
         align-items: center;
         gap: 8px;
         font-size: 16px;
-        color: #313E56;
     }
 
     .text-wrapper {
