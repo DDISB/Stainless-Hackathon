@@ -3,108 +3,183 @@
     export let points: number;
     export let description: string;
     export let isNew: boolean = false;
+    export let image: string = "";
+    export let timeLeft: string = "";
+    export let progress: number = 0;
+    export let company: string = "";
+    export let companyDescription: string = "";
 </script>
 
 <div class="task">
-    <div class="task-header">
-        <div class="task-info">
-            <h3>{title}</h3>
-            <div class="points">
-                <span class="points-value">{points}</span>
-                <span class="points-label">баллов</span>
+    {#if image}
+        <div class="task-image" style="background-image: url({image})">
+            <div class="task-title">
+                {title}
             </div>
         </div>
-        {#if isNew}
-            <span class="new-badge">Новое</span>
-        {/if}
+    {/if}
+    <div class="task-content">
+        <div class="company-info">
+            <div class="company-logo">
+                <img src="https://c.animaapp.com/mbc14gzx2SIMy8/img/box-minimalistic.svg" alt="{company}" />
+            </div>
+            <div class="company-details">
+                <div class="company-name">{company}</div>
+                <div class="company-description">{companyDescription}</div>
+            </div>
+        </div>
+        <p class="description">{description}</p>
+        <div class="task-footer">
+            <div class="progress-info">
+                <div class="time-left">Осталось {timeLeft}</div>
+                <div class="points-info">
+                    <span>Вы получите +{points}</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 1L10 5L14 6L11 9L12 13L8 11L4 13L5 9L2 6L6 5L8 1Z" fill="#2B5BDA"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {progress}%"></div>
+            </div>
+        </div>
+        <button class="cancel-button">
+            Отменить задание
+        </button>
     </div>
-    <p class="description">{description}</p>
-    <button class="task-button">
-        Выполнить
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </button>
 </div>
 
 <style>
     .task {
         background-color: white;
-        border-radius: 10px;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .task-image {
+        height: 160px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        padding: 16px;
+    }
+
+    .task-title {
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .task-content {
         padding: 16px;
         display: flex;
         flex-direction: column;
         gap: 16px;
     }
 
-    .task-header {
+    .company-info {
         display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
+        gap: 12px;
+        align-items: center;
     }
 
-    .task-info {
+    .company-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: #f8f9fa;
         display: flex;
         align-items: center;
-        gap: 12px;
+        justify-content: center;
     }
 
-    h3 {
-        font-size: 16px;
-        font-weight: 600;
-        margin: 0;
-        color: #313E56;
+    .company-logo img {
+        width: 24px;
+        height: 24px;
     }
 
-    .points {
+    .company-details {
         display: flex;
-        align-items: baseline;
+        flex-direction: column;
         gap: 4px;
     }
 
-    .points-value {
-        color: #2B5BDA;
+    .company-name {
         font-weight: 600;
-        font-size: 16px;
+        color: #313E56;
     }
 
-    .points-label {
+    .company-description {
         color: #6c757d;
         font-size: 14px;
-    }
-
-    .new-badge {
-        background-color: #2B5BDA;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 500;
     }
 
     .description {
-        color: #6c757d;
-        font-size: 14px;
+        color: #313E56;
+        font-size: 16px;
         margin: 0;
         line-height: 1.5;
     }
 
-    .task-button {
+    .task-footer {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
         gap: 8px;
-        background: none;
-        border: none;
-        color: #2B5BDA;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        padding: 0;
-        transition: opacity 0.2s;
     }
 
-    .task-button:hover {
-        opacity: 0.8;
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .time-left {
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    .points-info {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #2B5BDA;
+        font-weight: 600;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background-color: #EFF2F7;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background-color: #2B5BDA;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .cancel-button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        background-color: #f8f9fa;
+        color: #6c757d;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .cancel-button:hover {
+        background-color: #e9ecef;
     }
 </style> 

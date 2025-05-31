@@ -323,12 +323,12 @@
     }
 
     @media (max-width: 768px) {
-        .balance {
-            padding: 4px 8px;
+        .content {
+            padding-bottom: 60px;
         }
 
-        .balance .text-wrapper {
-            font-size: 12px;
+        .balance {
+            padding: 4px 8px;
         }
 
         .balance .box-minimalistic {

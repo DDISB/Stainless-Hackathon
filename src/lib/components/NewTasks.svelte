@@ -3,15 +3,14 @@
 
     const newTasks = [
         {
-            title: 'Подключить уведомления',
-            points: 150,
-            description: 'Включите уведомления, чтобы не пропустить важные события',
-            isNew: true
-        },
-        {
-            title: 'Пригласить друга',
-            points: 200,
-            description: 'Пригласите друга и получите дополнительные баллы',
+            title: 'Расскажите о любимом продукте',
+            points: 100,
+            description: 'Поделитесь отзывом о вашем любимом продукте в соцсетях',
+            timeLeft: '23:45',
+            progress: 0,
+            company: 'Магнит Косметик',
+            companyDescription: 'Сервис доставки товаров для дома',
+            image: 'https://example.com/cosmetics2.jpg',
             isNew: true
         }
     ];
@@ -29,6 +28,5 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
-        margin-top: 16px;
     }
 </style> 

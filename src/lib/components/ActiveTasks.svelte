@@ -3,14 +3,14 @@
 
     const activeTasks = [
         {
-            title: 'Пройти тренировку',
-            points: 100,
-            description: 'Выполните тренировку и получите бонусные баллы'
-        },
-        {
-            title: 'Заполнить профиль',
-            points: 50,
-            description: 'Добавьте информацию о себе в профиль'
+            title: 'Начни свое утро с пользой!',
+            points: 80,
+            description: 'Снимите историю в соцсети про вашу косметичку',
+            timeLeft: '1:23',
+            progress: 73,
+            company: 'Магнит Косметик',
+            companyDescription: 'Сервис доставки товаров для дома',
+            image: 'https://example.com/cosmetics.jpg'
         }
     ];
 </script>
@@ -27,6 +27,5 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
-        /* margin-top: 16px; */
     }
 </style> 
