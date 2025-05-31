@@ -42,7 +42,8 @@
     .main-container {
         max-width: 1000px;
         width: 100%;
-        height: calc(100vh - 48px); /* Учитываем padding контента в Layout */
+        /* height: calc(100vh - 48px); Учитываем padding контента в Layout */
+        height: 100%;
         display: flex;
         flex-direction: column;
         gap: 30px;
@@ -75,6 +76,7 @@
     }
 
     h1 {
+        font-weight: 700;
         font-size: 32px;
         margin: 0;
     }

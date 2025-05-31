@@ -89,6 +89,7 @@
 
     h1 {
         font-size: 32px;
+        font-weight: 700;
         margin: 0;
     }
 

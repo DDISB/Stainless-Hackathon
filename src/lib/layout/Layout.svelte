@@ -13,12 +13,9 @@
     import profileIcon from '../../assets/profile.svg';
 
     let activeComponent = 'catalog';
-    let isMobile = false;
     let currentTaskData: TaskData | null = null;
 
     onMount(() => {
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
         window.addEventListener('navigate', ((e: CustomEvent<{component: string; taskData?: TaskData}>) => {
             if (e.detail.taskData) {
                 currentTaskData = e.detail.taskData;
@@ -27,16 +24,11 @@
         }) as EventListener);
         
         return () => {
-            window.removeEventListener('resize', checkMobile);
             window.removeEventListener('navigate', ((e: CustomEvent) => {
                 setActiveComponent(e.detail.component);
             }) as EventListener);
         };
     });
-
-    function checkMobile() {
-        isMobile = window.innerWidth <= 768;
-    }
 
     function setActiveComponent(component: string) {
         activeComponent = component;
@@ -49,27 +41,6 @@
 </svelte:head>
 
 <div class="layout">
-    {#if !isMobile}
-        <nav class="desktop-nav">
-            <button class:active={activeComponent === 'catalog'} on:click={() => setActiveComponent('catalog')}>
-                <img src={cabinetIcon} alt="Cabinet icon" />
-                <span>Кабинет</span>
-            </button>
-            <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
-                <img src={bonusIcon} alt="Iron-Pass icon" />
-                <span>Iron-Pass</span>
-            </button>
-            <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
-                <img src={shopIcon} alt="Shop icon" />
-                <span>Магазин</span>
-            </button>
-            <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
-                <img src={profileIcon} alt="Profile icon" />
-                <span>Профиль</span>
-            </button>
-        </nav>
-    {/if}
-
     <main class="content">
         {#if activeComponent === 'catalog'}
             <Catalog />
@@ -86,26 +57,24 @@
         {/if}
     </main>
 
-    {#if isMobile}
-        <nav class="mobile-nav">
-            <button class:active={activeComponent === 'catalog'} on:click={() => setActiveComponent('catalog')}>
-                <img src={cabinetIcon} alt="Cabinet icon" />
-                <span>Кабинет</span>
-            </button>
-            <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
-                <img src={bonusIcon} alt="Iron-Pass icon" />
-                <span>Iron-Pass</span>
-            </button>
-            <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
-                <img src={shopIcon} alt="Shop icon" />
-                <span>Магазин</span>
-            </button>
-            <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
-                <img src={profileIcon} alt="Profile icon" />
-                <span>Профиль</span>
-            </button>
-        </nav>
-    {/if}
+    <nav class="bottom-nav">
+        <button class:active={activeComponent === 'catalog'} on:click={() => setActiveComponent('catalog')}>
+            <img src={cabinetIcon} alt="Cabinet icon" />
+            <span>Кабинет</span>
+        </button>
+        <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
+            <img src={bonusIcon} alt="Iron-Pass icon" />
+            <span>Iron-Pass</span>
+        </button>
+        <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
+            <img src={shopIcon} alt="Shop icon" />
+            <span>Магазин</span>
+        </button>
+        <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
+            <img src={profileIcon} alt="Profile icon" />
+            <span>Профиль</span>
+        </button>
+    </nav>
 </div>
 
 <style>
@@ -128,28 +97,20 @@
         background-color: #EFF2F7;
         flex-direction: column;
         align-items: center;
+        padding-bottom: 84px;
     }
 
-    nav {
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
         display: flex;
         justify-content: space-around;
         align-items: center;
         background-color: #f8f9fa;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
         padding: 10px;
-        width: 100%;
-    }
-
-    .desktop-nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
-
-    .mobile-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
         z-index: 100;
     }
 
@@ -190,20 +151,5 @@
 
     button.active img {
         opacity: 1;
-    }
-
-    @media (max-width: 768px) {
-        .content {
-            padding-bottom: 70px;
-        }
-
-        button {
-            padding: 8px;
-        }
-
-        button img {
-            width: 20px;
-            height: 20px;
-        }
     }
 </style> 
