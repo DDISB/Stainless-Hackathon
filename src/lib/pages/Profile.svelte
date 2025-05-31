@@ -13,6 +13,12 @@
     }
 
     $: currentDate = formatDate(new Date());
+
+    function navigateToSubscription() {
+        window.dispatchEvent(new CustomEvent('navigate', { 
+            detail: { component: 'subscription' }
+        }));
+    }
 </script>
 
 <div class="main-container">
@@ -34,6 +40,22 @@
     </div>
 
     <div class="content">
+        <div class="content-block">
+            <div class="white-block-button">
+                <button class="subscription-block" on:click={navigateToSubscription}>
+                    <div class="subscription-info">
+                        <span>Подписка</span>
+                        <span class="text-wrapper">PRO</span>
+                    </div>
+                    <div class="arrow-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+
         <div class="content-block">
             Профиль content
         </div>
@@ -120,9 +142,63 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
+    }
+
+    .white-block-button {
+        width: 100%;
         background-color: white;
         border-radius: 10px;
-        padding: 16px;
+        padding: 0px 16px;
+    }
+
+    .subscription-block {
+        height: 64px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        border: none;
+        background: none;
+        padding: 0;
+    }
+
+    .subscription-block:hover {
+        background-color: #f8f9fa;
+    }
+
+    .subscription-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        color: #313E56;
+    }
+    .text-wrapper {
+        background: #2B5BDA;
+        border-radius: 6px;
+        padding: 4px 8px;
+        color: white;
+        font-weight: 700;
+    }
+
+    .arrow-button {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2B5BDA;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+    }
+
+    .arrow-button:hover {
+        background-color: #f0f3ff;
     }
 
     @media (max-width: 768px) {

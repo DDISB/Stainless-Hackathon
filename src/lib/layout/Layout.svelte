@@ -7,6 +7,10 @@
     import Subscription from '../pages/Subscription.svelte';
     import TaskDetails from '../pages/TaskDetails.svelte';
     import type { TaskData } from '../interfaces';
+    import cabinetIcon from '../../assets/cabinet.svg';
+    import bonusIcon from '../../assets/bonus.svg';
+    import shopIcon from '../../assets/shop.svg';
+    import profileIcon from '../../assets/profile.svg';
 
     let activeComponent = 'catalog';
     let isMobile = false;
@@ -48,16 +52,20 @@
     {#if !isMobile}
         <nav class="desktop-nav">
             <button class:active={activeComponent === 'catalog'} on:click={() => setActiveComponent('catalog')}>
-                Кабинет 
+                <img src={cabinetIcon} alt="Cabinet icon" />
+                <span>Кабинет</span>
             </button>
             <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
-                Iron-Pass
+                <img src={bonusIcon} alt="Iron-Pass icon" />
+                <span>Iron-Pass</span>
             </button>
             <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
-                Магазин
+                <img src={shopIcon} alt="Shop icon" />
+                <span>Магазин</span>
             </button>
             <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
-                Профиль
+                <img src={profileIcon} alt="Profile icon" />
+                <span>Профиль</span>
             </button>
         </nav>
     {/if}
@@ -81,16 +89,20 @@
     {#if isMobile}
         <nav class="mobile-nav">
             <button class:active={activeComponent === 'catalog'} on:click={() => setActiveComponent('catalog')}>
-                Кабинет
+                <img src={cabinetIcon} alt="Cabinet icon" />
+                <span>Кабинет</span>
             </button>
             <button class:active={activeComponent === 'iron-pass'} on:click={() => setActiveComponent('iron-pass')}>
-                Iron-Pass
+                <img src={bonusIcon} alt="Iron-Pass icon" />
+                <span>Iron-Pass</span>
             </button>
             <button class:active={activeComponent === 'shop'} on:click={() => setActiveComponent('shop')}>
-                Магазин
+                <img src={shopIcon} alt="Shop icon" />
+                <span>Магазин</span>
             </button>
             <button class:active={activeComponent === 'profile'} on:click={() => setActiveComponent('profile')}>
-                Профиль
+                <img src={profileIcon} alt="Profile icon" />
+                <span>Профиль</span>
             </button>
         </nav>
     {/if}
@@ -146,23 +158,52 @@
         border: none;
         padding: 10px 20px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 10px;
         transition: all 0.3s ease;
         border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: #9299A699;
+    }
+
+    button img {
+        width: 24px;
+        height: 24px;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
     }
 
     button:hover {
         background-color: #e9ecef;
     }
 
+    button:hover img {
+        opacity: 1;
+    }
+
     button.active {
         background-color: #e9ecef;
-        color: #0d6efd;
+        color: #2B5BDA;
+    }
+
+    button.active img {
+        opacity: 1;
     }
 
     @media (max-width: 768px) {
         .content {
             padding-bottom: 70px;
+        }
+
+        button {
+            padding: 8px;
+        }
+
+        button img {
+            width: 20px;
+            height: 20px;
         }
     }
 </style> 

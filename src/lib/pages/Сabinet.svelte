@@ -203,6 +203,8 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        font-size: 16px;
+        color: #313E56;
     }
 
     .text-wrapper {
