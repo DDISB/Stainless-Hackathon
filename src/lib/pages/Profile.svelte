@@ -51,7 +51,28 @@
         </div>
 
         <div class="content-block">
-            Профиль content
+            <div class="white-block">
+                <h2>Информация о вашей квартире</h2>
+                <div class="info-row">
+                    <span class="info-label">Этаж:</span>
+                    <span class="info-value">№6</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Квартира:</span>
+                    <span class="info-value">№56</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <button class="rewards-block" on:click={() => {}}>
+                <span>Полученные награды</span>
+                <div class="arrow-button">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </button>
         </div>
     </div>
 </div>
@@ -70,7 +91,7 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 12px;
     }
 
     .header {
@@ -161,6 +182,63 @@
 
     .arrow-button:hover {
         background-color: #f0f3ff;
+    }
+
+    .white-block {
+        width: 100%;
+        background-color: white;
+        border-radius: 16px;
+        padding: 16px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #EFF2F7;
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        color: #313E56;
+        font-size: 14px;
+    }
+
+    .info-value {
+        color: #313E56;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .rewards-block {
+        width: 100%;
+        height: 56px;
+        background-color: white;
+        border-radius: 16px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #313E56;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .rewards-block:hover {
+        background-color: #f8f9fa;
+    }
+
+    h2 {
+        font-size: 16px;
+        /* font-weight: 600; */
+        color: #313E56;
+        margin: 0 0 8px 0;
     }
 
     @media (max-width: 768px) {
