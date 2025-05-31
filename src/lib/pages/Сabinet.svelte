@@ -1,6 +1,7 @@
 <script lang="ts">
     import ActiveTasks from '../components/ActiveTasks.svelte';
     import NewTasks from '../components/NewTasks.svelte';
+    import crownIcon from '../../assets/crown.svg';
     
     let currentDate: string;
     let activeTab = 'active'; // 'active' or 'new'
@@ -79,8 +80,14 @@
                         <div class="progress-fill" style="width: 75%"></div>
                     </div>
                     <div class="points-display">
-                        <span class="points current">1500 баллов</span>
-                        <span class="points target">2000 баллов</span>
+                        <span class="points current">
+                            <img src={crownIcon} alt="Crown icon" class="crown-icon" />
+                            1500
+                        </span>
+                        <span class="points target">
+                            <img src={crownIcon} alt="Crown icon" class="crown-icon" />
+                            2000
+                        </span>
                     </div>
                 </div>
             </div>
@@ -114,6 +121,8 @@
 <style>
     h1 {
         font-size: 32px;
+        color: #313E56;
+        font-weight: 700;
     }
 
     h2 {
@@ -140,7 +149,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 30px;
+        gap: 24px;
     }
 
     .header {
@@ -168,7 +177,7 @@
     .white-block {
         width: 100%;
         background-color: white;
-        border-radius: 10px;
+        border-radius: 16px;
         padding: 32px 16px;
         display: flex;
         flex-direction: column;
@@ -178,7 +187,7 @@
     .white-block-button {
         width: 100%;
         background-color: white;
-        border-radius: 10px;
+        border-radius: 16px;
         padding: 0px 16px;
     }
 
@@ -209,10 +218,11 @@
 
     .text-wrapper {
         background: #2B5BDA;
-        border-radius: 6px;
+        border-radius: 12px;
         padding: 4px 8px;
         color: white;
         font-weight: 700;
+        font-size: 12px;
     }
 
     .arrow-button {
@@ -247,13 +257,14 @@
 
     .balance {
         display: flex;
-        height: 38px;
+        height: 32px;
+        width: 72px;
         align-items: center;
         justify-content: center;
         gap: 4px;
-        padding: 4px 10px 4px 12px;
+        /* padding: 200px 0px; */
         background-color: #2B5BDA;
-        border-radius: 8px;
+        border-radius: 12px;
         transition: background-color 0.3s ease;
     }
 
@@ -311,7 +322,15 @@
     .points {
         font-size: 14px;
         padding: 4px 8px;
-        border-radius: 4px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .crown-icon {
+        width: 14px;
+        height: 14px;
     }
 
     .points.current {
@@ -322,6 +341,10 @@
     .points.target {
         background-color: #2B5BDA;
         color: white;
+    }
+
+    .points.target .crown-icon {
+        filter: brightness(0) invert(1);
     }
 
     @media (max-width: 768px) {
