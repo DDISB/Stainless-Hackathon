@@ -45,6 +45,10 @@
             detail: { component }
         }));
     }
+
+    function setActiveComponent(component: string) {
+        navigate(component);
+    }
 </script>
 
 <div class="main-container">
@@ -77,7 +81,7 @@
 
         <div class="content-block">
             <h2>Карта бонусов</h2>
-            <div class="white-block">
+            <div class="white-block bonus-card" on:click={() => setActiveComponent('iron-pass')} on:keydown={e => e.key === 'Enter' && setActiveComponent('iron-pass')} role="button" tabindex="0">
                 <p class="gray-text">Выполняй задания <br> и получай бонусы</p>
                 <div class="level-progress">
                     <div class="level-indicators">
@@ -427,5 +431,20 @@
 
     .bottom-nav button.active img {
         opacity: 1;
+    }
+
+    .bonus-card {
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .bonus-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .bonus-card:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #2B5BDA;
     }
 </style> 
