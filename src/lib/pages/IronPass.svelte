@@ -1,37 +1,54 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+    import { auth } from '../stores/auth';
     import Balance from '../components/Balance.svelte';
     import LevelProgression from '../components/LevelProgression.svelte';
-    import type { Bonus, Prize } from '../interfaces';
+
+    interface BattlePassLevel {
+        right: {
+            count: number;
+        };
+        left: {
+            logo: string;
+            text: string;
+        };
+    }
+
+    interface BattlePassData {
+        battelPass: Record<string, BattlePassLevel>;
+    }
 
     let currentDate: string;
-    let currentLevel = 12; // Example current level
+    let currentLevel = 12;
+    let battlePassData: BattlePassData | null = null;
+    let isLoading = true;
+    let error: string | null = null;
 
-    const bonuses: Bonus[] = Array.from({ length: 30 }, (_, i) => ({
-        level: i + 1,
-        points: (i + 1) * 10,
-        description: `Бонус ${i + 1} уровня`
-    }));
+    async function fetchBattlePass() {
+        try {
+            if (!$auth.user) {
+                throw new Error('Пользователь не авторизован');
+            }
 
-    const prizes: Prize[] = [
-        {
-            level: 5,
-            name: 'Бесплатное посещение',
-            description: 'Море Парк',
-            image: '/images/more-park.png'
-        },
-        {
-            level: 15,
-            name: 'Промокод на 1000 руб',
-            description: 'В магазине',
-            image: '/images/promo.png'
-        },
-        {
-            level: 30,
-            name: '+50% скидка',
-            description: 'От 700 руб',
-            image: '/images/discount.png'
+            const response = await fetch('http://10.168.126.75:3000/api/battelPass/get', {
+                headers: {
+                    'Authorization': `Bearer ${$auth.token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Ошибка получения данных: ${response.status}`);
+            }
+
+            battlePassData = await response.json();
+        } catch (err) {
+            console.error('Ошибка при загрузке данных:', err);
+            error = err instanceof Error ? err.message : 'Неизвестная ошибка';
+        } finally {
+            isLoading = false;
         }
-    ];
+    }
 
     function formatDate(date: Date): string {
         const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
@@ -44,27 +61,53 @@
         return `${dayName}, ${day} ${month}`;
     }
 
+    onMount(fetchBattlePass);
     $: currentDate = formatDate(new Date());
+
+    // Transform battle pass data for LevelProgression component
+    $: bonuses = battlePassData ? Object.entries(battlePassData.battelPass).map(([level, data]) => ({
+        level: parseInt(level),
+        points: data.right.count,
+        description: `Уровень ${level}`
+    })) : [];
+
+    $: prizes = battlePassData ? Object.entries(battlePassData.battelPass)
+        .filter(([_, data]) => data.left.logo || data.left.text)
+        .map(([level, data]) => ({
+            level: parseInt(level),
+            name: data.left.text || 'Награда',
+            description: '',
+            image: data.left.logo || '/images/default-prize.png'
+        })) : [];
 </script>
 
 <div class="main-container">
-    <div class="header">
-        <div class="top-header">
-            <div class="date">{currentDate}</div>
+    <div class="header-wrapper">
+        <div class="header">
+            <div class="top-header">
+                <div class="date">{currentDate}</div>
+            </div>
+            <div class="low-header">
+                <h1>Карта бонусов</h1>
+                <Balance points={2880} />
+            </div>
         </div>
-        <div class="low-header">
-            <h1>Карта бонусов</h1>
-            <Balance points={2880} />
-        </div>
+        <div class="header-gradient"></div>
     </div>
 
     <div class="content">
         <div class="content-block">
-            <LevelProgression 
-                {currentLevel}
-                {bonuses}
-                {prizes}
-            />
+            {#if isLoading}
+                <div class="loading">Загрузка данных...</div>
+            {:else if error}
+                <div class="error">{error}</div>
+            {:else}
+                <LevelProgression 
+                    {currentLevel}
+                    {bonuses}
+                    {prizes}
+                />
+            {/if}
         </div>
     </div>
 </div>
@@ -77,6 +120,39 @@
         display: flex;
         flex-direction: column;
         gap: 24px;
+        padding-top: 74px; /* Высота хедера */
+    }
+
+    .header-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        background: white;
+    }
+
+    .header {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        height: 74px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: white;
+    }
+
+    .header-gradient {
+        position: absolute;
+        bottom: -24px;
+        left: 0;
+        right: 0;
+        height: 24px;
+        background: linear-gradient(to bottom, white, transparent);
     }
 
     .content {
@@ -85,14 +161,6 @@
         flex-direction: column;
         justify-content: center;
         gap: 24px;
-    }
-
-    .header {
-        width: 100%;
-        height: 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
     }
 
     .low-header {
@@ -118,5 +186,18 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
+    }
+
+    .loading,
+    .error {
+        text-align: center;
+        padding: 20px;
+        background: white;
+        border-radius: 12px;
+    }
+
+    .error {
+        color: #dc3545;
+        background: #ffe5e5;
     }
 </style> 
