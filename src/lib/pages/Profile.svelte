@@ -1,5 +1,6 @@
 <script lang="ts">
     import Balance from '../components/Balance.svelte';
+    import { auth } from '../stores/auth';
     let currentDate: string;
 
     function formatDate(date: Date): string {
@@ -18,6 +19,13 @@
     function navigateToSubscription() {
         window.dispatchEvent(new CustomEvent('navigate', { 
             detail: { component: 'subscription' }
+        }));
+    }
+
+    function handleLogout() {
+        auth.logout();
+        window.dispatchEvent(new CustomEvent('navigate', { 
+            detail: { component: 'auth' }
         }));
     }
 </script>
@@ -72,6 +80,12 @@
                         <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
+            </button>
+        </div>
+
+        <div class="content-block">
+            <button class="logout-button" on:click={handleLogout}>
+                Выйти из аккаунта
             </button>
         </div>
     </div>
@@ -239,6 +253,23 @@
         /* font-weight: 600; */
         color: #313E56;
         margin: 0 0 8px 0;
+    }
+
+    .logout-button {
+        width: 100%;
+        height: 48px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .logout-button:hover {
+        background-color: #c82333;
     }
 
     @media (max-width: 768px) {
