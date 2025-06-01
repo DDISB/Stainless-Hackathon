@@ -46,7 +46,8 @@
     {#if image}
         <div class="task-image" style="background-image: url({image})">
             <div class="task-title">
-                {title}
+                <img src="task-image" alt="">
+                <!-- <img src="https://downloader.disk.yandex.ru/preview/1545f02a7071859b40c875086ce92a064c26cd823c62d5e31a35354e0a09fe53/683bce4f/P1Uu3IBvn2J_059WhlC9XydbkJ2sC_KEk2e_VtbYAOfuuRRO_ACnqYduWLfxvvz5VgHzs7xBXDvk4Qqe7B86gQ%3D%3D?uid=0&filename=%D0%93%D0%BE%D1%80%D1%8B.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v3&size=2048x2048" alt=""> -->
             </div>
         </div>
     {/if}

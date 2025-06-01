@@ -8,6 +8,7 @@
     import bonusIcon from '../../assets/bonus.svg';
     import shopIcon from '../../assets/shop.svg';
     import profileIcon from '../../assets/profile.svg';
+    import { onMount } from 'svelte';
     
     let currentDate: string;
     let activeTab = 'active'; // 'active' or 'new'
@@ -23,10 +24,9 @@
         return `${dayName}, ${day} ${month}`;
     }
 
-    interface Task {
-        id: number;
-        title: string;
-    }
+    onMount(() => {
+        console.log($auth.user);
+    });
 
     $: currentDate = formatDate(new Date());
 

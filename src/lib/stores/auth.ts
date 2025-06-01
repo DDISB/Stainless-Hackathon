@@ -4,8 +4,7 @@ interface User {
     id: number;
     phone: string;
     name: string;
-    floor: number;
-    apartment: number;
+    premiseId: number;
 }
 
 interface AuthStore {
