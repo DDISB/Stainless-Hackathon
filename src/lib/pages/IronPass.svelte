@@ -42,6 +42,7 @@
             }
 
             battlePassData = await response.json();
+            // console.log(battlePassData)
         } catch (err) {
             console.error('Ошибка при загрузке данных:', err);
             error = err instanceof Error ? err.message : 'Неизвестная ошибка';

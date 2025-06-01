@@ -1,11 +1,14 @@
 <script lang="ts">
     import type { Bonus, Prize, LevelInfo } from '../interfaces';
     import PrizeCard from './PrizeCard.svelte';
+    import { onMount } from 'svelte';
     
     export let currentLevel: number;
     export let bonuses: Bonus[];
     export let prizes: Prize[];
     export let totalLevels: number = 30;
+
+    let levelsContainer: HTMLElement;
 
     $: levels = Array.from({ length: totalLevels }, (_, i) => {
         const level = i + 1;
@@ -22,12 +25,30 @@
     };
 
     $: shouldShowLine = (level: number) => level < totalLevels;
+
+    onMount(() => {
+        // Find the current level element
+        const currentLevelElement = document.querySelector(`[data-level="${currentLevel}"]`);
+        if (currentLevelElement) {
+            // Calculate the scroll position to center the current level
+            const containerHeight = window.innerHeight - 74; // Subtract header height
+            const elementTop = currentLevelElement.getBoundingClientRect().top;
+            const elementHeight = currentLevelElement.getBoundingClientRect().height;
+            const scrollTo = elementTop - (containerHeight - elementHeight) / 2;
+            
+            // Smooth scroll to the position
+            window.scrollTo({
+                top: window.scrollY + scrollTo,
+                behavior: 'smooth'
+            });
+        }
+    });
 </script>
 
 <div class="progression-container">
-    <div class="levels-track">
+    <div class="levels-track" bind:this={levelsContainer}>
         {#each levels as level, index}
-            <div class="level-item">
+            <div class="level-item" data-level={level.level}>
                 <div class="level-content">
                     <div class="left-content">
                         {#if level.prize}
