@@ -6,7 +6,7 @@
 
     function goBack() {
         window.dispatchEvent(new CustomEvent('navigate', { 
-            detail: { component: 'catalog' }
+            detail: { component: 'cabinet' }
         }));
     }
 </script>

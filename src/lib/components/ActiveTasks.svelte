@@ -51,15 +51,30 @@
     // Преобразование данных API в формат компонента Task
     function adaptTask(apiTask: ApiTask) {
         const { integrationTask } = apiTask;
+
+        function getImagePath(url: string, type: 'banner' | 'mini') {
+            if (!url) return '';
+            // Extract just the filename from the URL
+            const parts = url.split('/');
+            const filename = parts[parts.length - 1];
+            // For partner logo, convert to mini version
+            if (type === 'mini') {
+                return `/src/assets/${filename.replace('_banner.png', '_mini.png')}`;
+            }
+            // For banner images
+            return `/src/assets/${filename}`;
+        }
+
         return {
             title: integrationTask.title,
             points: integrationTask.amount,
             description: integrationTask.description,
-            image: integrationTask.logo,
+            image: getImagePath(integrationTask.logo, 'banner'),
             timeLeft: formatTimeLeft(integrationTask.expiredAt),
             progress: apiTask.marker ? 100 : 0,
             company: integrationTask.partner?.name,
-            companyDescription: integrationTask.partner?.description
+            companyDescription: integrationTask.partner?.description,
+            companyLogo: getImagePath(integrationTask.logo, 'mini')
         };
     }
 

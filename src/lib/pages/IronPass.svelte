@@ -73,12 +73,11 @@
     })) : [];
 
     $: prizes = battlePassData ? Object.entries(battlePassData.battelPass)
-        .filter(([_, data]) => data.left.logo || data.left.text)
+        .filter(([_, data]) => data.left.text)
         .map(([level, data]) => ({
             level: parseInt(level),
             name: data.left.text || 'Награда',
-            description: '',
-            image: data.left.logo || '/images/default-prize.png'
+            description: ''
         })) : [];
 </script>
 

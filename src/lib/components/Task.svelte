@@ -10,7 +10,21 @@
     export let progress: number = 0;
     export let company: string = "";
     export let companyDescription: string = "";
+    export let companyLogo: string = "";
     export let showDetails: boolean = true;
+
+    let imageError = false;
+    let logoError = false;
+
+    function handleImageError() {
+        console.error('Failed to load task image:', image);
+        imageError = true;
+    }
+
+    function handleLogoError() {
+        console.error('Failed to load company logo:', companyLogo);
+        logoError = true;
+    }
 
     function navigateToDetails() {
         if (showDetails) {
@@ -43,18 +57,31 @@
     role="button"
     tabindex="0"
 >
-    {#if image}
-        <div class="task-image" style="background-image: url({image})">
+    {#if image && !imageError}
+        <div class="task-image">
+            <img 
+                src={image} 
+                alt={title}
+                class="background-image"
+                on:error={handleImageError}
+            />
             <div class="task-title">
-                <img src="task-image" alt="">
-                <!-- <img src="https://downloader.disk.yandex.ru/preview/1545f02a7071859b40c875086ce92a064c26cd823c62d5e31a35354e0a09fe53/683bce4f/P1Uu3IBvn2J_059WhlC9XydbkJ2sC_KEk2e_VtbYAOfuuRRO_ACnqYduWLfxvvz5VgHzs7xBXDvk4Qqe7B86gQ%3D%3D?uid=0&filename=%D0%93%D0%BE%D1%80%D1%8B.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v3&size=2048x2048" alt=""> -->
+                <h2>{title}</h2>
             </div>
         </div>
     {/if}
     <div class="task-content">
         <div class="company-info">
             <div class="company-logo">
-                <img src="https://c.animaapp.com/mbc14gzx2SIMy8/img/box-minimalistic.svg" alt="{company}" />
+                {#if companyLogo && !logoError}
+                    <img 
+                        src={companyLogo} 
+                        alt={company}
+                        on:error={handleLogoError}
+                    />
+                {:else}
+                    <div class="fallback-logo">{company[0]}</div>
+                {/if}
             </div>
             <div class="company-details">
                 <div class="company-name">{company}</div>
@@ -105,19 +132,47 @@
 
     .task-image {
         height: 160px;
-        background-size: cover;
-        background-position: center;
         position: relative;
         display: flex;
         align-items: flex-end;
         padding: 16px;
+        overflow: hidden;
+    }
+
+    .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
     }
 
     .task-title {
+        position: relative;
+        z-index: 1;
+    }
+
+    .task-title h2 {
         color: white;
         font-size: 20px;
         font-weight: 600;
         text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        margin: 0;
+    }
+
+    .fallback-logo {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e9ecef;
+        color: #6c757d;
+        font-weight: 600;
+        font-size: 16px;
+        border-radius: 8px;
     }
 
     .task-content {
