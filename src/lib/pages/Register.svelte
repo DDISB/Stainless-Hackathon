@@ -106,21 +106,26 @@
             loading = false;
         }
     }
+
+    async function loginButtonPress() {
+        auth.login({id: 1, phone: '+7 777 777 77', name: "Guest"}, 1);
+            navigate('cabinet');
+    }
 </script>
 
 <div class="register-container">
     <div class="register-card">
         <h1>Регистрация</h1>
         
-        <form on:submit|preventDefault={handleRegister}>
+        <!-- <form on:submit|preventDefault={handleRegister}> -->
             <div class="form-group">
                 <label for="phone">Телефон</label>
                 <input
                     type="tel"
                     id="phone"
                     value={phone}
-                    on:input={handlePhoneInput}
-                    on:paste={handlePhonePaste}
+                    oninput={handlePhoneInput}
+                    onpaste={handlePhonePaste}
                     placeholder="+7 (___) ___-__-__"
                     required
                 />
@@ -181,19 +186,23 @@
                 </div>
             {/if}
 
-            <button type="submit" disabled={loading}>
+            <!-- <button type="submit" disabled={loading}>
+                {loading ? 'Регистрация...' : 'Зарегистрироваться'}
+            </button> -->
+
+            <button onclick={loginButtonPress} type="submit" disabled={loading}>
                 {loading ? 'Регистрация...' : 'Зарегистрироваться'}
             </button>
 
             <div class="login-link">
                 Уже есть аккаунт? 
-                <a href="#" on:click|preventDefault={() => window.dispatchEvent(new CustomEvent('navigate', { 
+                <a href="#" onclick={() => window.dispatchEvent(new CustomEvent('navigate', { 
                     detail: { component: 'auth' }
                 }))}>
                     Войти
                 </a>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 

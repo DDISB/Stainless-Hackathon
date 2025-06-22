@@ -1,11 +1,7 @@
 <script lang="ts">
   import Layout from './lib/layout/Layout.svelte';
-  import AuthGuard from './lib/components/AuthGuard.svelte';
   import Auth from './lib/pages/Auth.svelte';
   import Register from './lib/pages/Register.svelte';
-  import Cabinet from './lib/pages/Cabinet.svelte';
-  import Subscription from './lib/pages/Subscription.svelte';
-  import BuySubscription from './lib/pages/BuySubscription.svelte';
   import { auth } from './lib/stores/auth';
   import { onMount } from 'svelte';
 

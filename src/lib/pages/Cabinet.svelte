@@ -24,10 +24,6 @@
         return `${dayName}, ${day} ${month}`;
     }
 
-    onMount(() => {
-        console.log($auth.user);
-    });
-
     $: currentDate = formatDate(new Date());
 
     function navigateToSubscription() {
@@ -85,8 +81,8 @@
                 <p class="gray-text">Выполняй задания <br> и получай бонусы</p>
                 <div class="level-progress">
                     <div class="level-indicators">
-                        <span class="level-text">3 уровень</span>
-                        <span class="level-text">4 уровень</span>
+                        <span class="level-text">12 уровень</span>
+                        <span class="level-text">13 уровень</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 75%"></div>

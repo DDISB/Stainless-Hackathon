@@ -95,21 +95,27 @@
             loading = false;
         }
     }
+
+    async function loginButtonPress() {
+        auth.login({id: 1, phone: '+7 777 777 77', name: "Guest"}, 1);
+            navigate('cabinet');
+    }
 </script>
 
 <div class="auth-container">
+    <h1>*** Для продолжения нажмите "Войти" ***</h1>
     <div class="auth-card">
         <h1>Вход</h1>
         
-        <form on:submit|preventDefault={handleLogin}>
+        <!-- <form on:submit|preventDefault={handleLogin}> -->
             <div class="form-group">
                 <label for="phone">Телефон</label>
                 <input
                     type="tel"
                     id="phone"
                     value={phone}
-                    on:input={handlePhoneInput}
-                    on:paste={handlePhonePaste}
+                    oninput={handlePhoneInput}
+                    onpaste={handlePhonePaste}
                     placeholder="+7 (___) ___-__-__"
                     required
                 />
@@ -133,17 +139,21 @@
                 </div>
             {/if}
 
-            <button type="submit" disabled={loading}>
+            <!-- <button type="submit" disabled={loading}>
+                {loading ? 'Вход...' : 'Войти'}
+            </button> -->
+
+            <button type="submit" onclick={loginButtonPress} disabled={loading}>
                 {loading ? 'Вход...' : 'Войти'}
             </button>
 
             <div class="register-link">
                 Нет аккаунта? 
-                <a href="#" on:click|preventDefault={() => navigate('register')}>
+                <a onclick={() => navigate('register')}>
                     Зарегистрироваться
                 </a>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 
@@ -152,6 +162,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         min-height: 100vh;
         padding: 20px;
         background-color: #f5f5f5;

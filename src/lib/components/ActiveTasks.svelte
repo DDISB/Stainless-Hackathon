@@ -8,7 +8,7 @@
         id: number;
         name: string;
         description: string;
-        logoUrl: string;
+        logoUrl?: string;
     }
 
     interface IntegrationTask {
@@ -19,7 +19,7 @@
         amount: number;
         type: string;
         priority: number;
-        logo: string;
+        logo?: string;
         partner: Partner;
     }
 
@@ -28,24 +28,79 @@
         marker: boolean;
         iTaskGuid: string;
         premiseId: number;
-        integrationTask: IntegrationTask;
+        integrationTask?: IntegrationTask;
     }
 
     // Состояние компонента
     let tasks: ApiTask[] = [];
-    let isLoading = true;
+    let isLoading = false;
     let error: string | null = null;
+
+    tasks = [{
+        guid: "string",
+        marker: false,
+        iTaskGuid: "string",
+        premiseId: 123,
+    }]
+
+    tasks = [
+        {
+            guid: "task-1",
+            marker: false,
+            iTaskGuid: "itask-1",
+            premiseId: 123,
+            integrationTask: {
+                guid: "itask-1",
+                title: "Посетите термы со скидкой",
+                description: "Посетите термы со скидкой",
+                expiredAt: "2025-12-31",
+                amount: 500,
+                type: "email",
+                priority: 1,
+                // logo не указан (необязательный параметр)
+                partner: {
+                    id: 1,
+                    name: "Море парк",
+                    description: "Оздоровительный комплекс",
+                    // logoUrl: "https://example.com/mailservice-logo.png"
+                }
+            }
+        },
+        {
+            guid: "task-2",
+            marker: false,
+            iTaskGuid: "itask-2",
+            premiseId: 456,
+            integrationTask: {
+                guid: "itask-2",
+                title: "Закажите доставку со скидкой",
+                description: "Закажите доставку со скидкой",
+                expiredAt: "2023-11-15",
+                amount: 1000,
+                type: "crm",
+                priority: 2,
+                logo: "https://example.com/crm-icon.png", // logo указан
+                partner: {
+                    id: 2,
+                    name: "Яндекс Доставка",
+                    description: "Курьерская служба доставки — Яндекс Доставка",
+                    // logoUrl: "https://example.com/supercrm-logo.png"
+                }
+            }
+        }
+    ];
 
     // Форматирование оставшегося времени
     function formatTimeLeft(expiredAt: string): string {
-        const now = new Date();
-        const expireDate = new Date(expiredAt);
-        const diff = expireDate.getTime() - now.getTime();
+        // const now = new Date();
+        // const expireDate = new Date(expiredAt);
+        // const diff = expireDate.getTime() - now.getTime();
         
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        // const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        // const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         
-        return days > 0 ? `${days}д ${hours}ч` : `${hours}ч`;
+        // return days > 0 ? `${days}д ${hours}ч` : `${hours}ч`;
+        return`${15}ч`;
     }
 
     // Преобразование данных API в формат компонента Task
@@ -109,7 +164,7 @@
         }
     }
 
-    onMount(fetchTasks);
+    // onMount(fetchTasks);
 </script>
 
 <div class="tasks-container">

@@ -174,10 +174,11 @@
     }
     .text-wrapper {
         background: #2B5BDA;
-        border-radius: 6px;
+        border-radius: 12px;
         padding: 4px 8px;
         color: white;
         font-weight: 700;
+        font-size: 12px;
     }
 
     .arrow-button {

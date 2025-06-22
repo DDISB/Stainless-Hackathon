@@ -21,35 +21,162 @@
     let currentDate: string;
     let currentLevel = 12;
     let battlePassData: BattlePassData | null = null;
-    let isLoading = true;
+    let isLoading = false;
     let error: string | null = null;
 
-    async function fetchBattlePass() {
-        try {
-            if (!$auth.user) {
-                throw new Error('Пользователь не авторизован');
-            }
-
-            const response = await fetch('http://10.168.126.75:3000/api/battelPass/get', {
-                headers: {
-                    'Authorization': `Bearer ${$auth.token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`Ошибка получения данных: ${response.status}`);
-            }
-
-            battlePassData = await response.json();
-            // console.log(battlePassData)
-        } catch (err) {
-            console.error('Ошибка при загрузке данных:', err);
-            error = err instanceof Error ? err.message : 'Неизвестная ошибка';
-        } finally {
-            isLoading = false;
+    battlePassData = {
+    battelPass: {
+        "1": {
+            right: { count: 10 },
+            left: { logo: "", text: "" }
+        },
+        "2": {
+            right: { count: 20 },
+            left: { logo: "", text: "" }
+        },
+        "3": {
+            right: { count: 30 },
+            left: { logo: "", text: "" }
+        },
+        "4": {
+            right: { count: 40 },
+            left: { logo: "", text: "" }
+        },
+        "5": {
+            right: { count: 50 },
+            left: { logo: "prize", text: "Скидка при покупке в маркетплейсе" }
+        },
+        "6": {
+            right: { count: 60 },
+            left: { logo: "", text: "" }
+        },
+        "7": {
+            right: { count: 70 },
+            left: { logo: "", text: "" }
+        },
+        "8": {
+            right: { count: 80 },
+            left: { logo: "", text: "" }
+        },
+        "9": {
+            right: { count: 90 },
+            left: { logo: "", text: "" }
+        },
+        "10": {
+            right: { count: 100 },
+            left: { logo: "prize", text: "Скидка при заказе в доставке" }
+        },
+        "11": {
+            right: { count: 110 },
+            left: { logo: "", text: "" }
+        },
+        "12": {
+            right: { count: 120 },
+            left: { logo: "", text: "" }
+        },
+        "13": {
+            right: { count: 130 },
+            left: { logo: "", text: "" }
+        },
+        "14": {
+            right: { count: 140 },
+            left: { logo: "", text: "" }
+        },
+        "15": {
+            right: { count: 150 },
+            left: { logo: "prize", text: "Скидка на косметические услуги в салоне" }
+        },
+        "16": {
+            right: { count: 160 },
+            left: { logo: "", text: "" }
+        },
+        "17": {
+            right: { count: 170 },
+            left: { logo: "", text: "" }
+        },
+        "18": {
+            right: { count: 180 },
+            left: { logo: "", text: "" }
+        },
+        "19": {
+            right: { count: 190 },
+            left: { logo: "", text: "" }
+        },
+        "20": {
+            right: { count: 200 },
+            left: { logo: "prize", text: "Сертификат на парфюмерию" }
+        },
+        "21": {
+            right: { count: 210 },
+            left: { logo: "", text: "" }
+        },
+        "22": {
+            right: { count: 220 },
+            left: { logo: "", text: "" }
+        },
+        "23": {
+            right: { count: 230 },
+            left: { logo: "", text: "" }
+        },
+        "24": {
+            right: { count: 240 },
+            left: { logo: "", text: "" }
+        },
+        "25": {
+            right: { count: 250 },
+            left: { logo: "prize", text: "Участие в розыгрыше машины" }
+        },
+        "26": {
+            right: { count: 260 },
+            left: { logo: "", text: "" }
+        },
+        "27": {
+            right: { count: 270 },
+            left: { logo: "", text: "" }
+        },
+        "28": {
+            right: { count: 280 },
+            left: { logo: "", text: "" }
+        },
+        "29": {
+            right: { count: 290 },
+            left: { logo: "", text: "" }
+        },
+        "30": {
+            right: { count: 300 },
+            left: { logo: "prize", text: "Абонимент в фитнес центр на месяц" }
         }
     }
+};
+
+    // async function fetchBattlePass() {
+    //     try {
+    //         if (!$auth.user) {
+    //             throw new Error('Пользователь не авторизован');
+    //         }
+
+    //         const response = await fetch('http://10.168.126.75:3000/api/battelPass/get', {
+    //             headers: {
+    //                 'Authorization': `Bearer ${$auth.token}`,
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error(`Ошибка получения данных: ${response.status}`);
+    //         }
+
+    //         battlePassData = await response.json();
+    //         // console.log(battlePassData)
+    //     } catch (err) {
+    //         console.error('Ошибка при загрузке данных:', err);
+    //         error = err instanceof Error ? err.message : 'Неизвестная ошибка';
+    //     } finally {
+    //         isLoading = false;
+    //     }
+    // }
+
+
 
     function formatDate(date: Date): string {
         const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
@@ -62,7 +189,7 @@
         return `${dayName}, ${day} ${month}`;
     }
 
-    onMount(fetchBattlePass);
+    // onMount(fetchBattlePass);
     $: currentDate = formatDate(new Date());
 
     // Transform battle pass data for LevelProgression component

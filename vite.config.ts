@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [svelte()],
   server: {
     host: true, // Listen on all network interfaces
-    port: 5173, // Default Vite port
+    port: 5172, // Default Vite port
     proxy: {
       '/api': {
         target: 'http://10.168.126.75:3000',
